@@ -18,7 +18,7 @@ El conocimiento no debería depender de hablar inglés. Que viva el conocimiento
 
 ## Lo más rápido
 
-En Windows: instala [Python](https://www.python.org/downloads/) 3.10 o más nuevo, haz doble clic en `Instalar.cmd` (una sola vez) y después en `Traducir.cmd`, que abre el traductor en el navegador.
+En Windows: sigue los pasos de PowerShell de la sección siguiente.
 
 Desde el código, con Python 3.10 o más nuevo:
 

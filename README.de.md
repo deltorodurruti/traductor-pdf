@@ -12,7 +12,7 @@ Wissen sollte nicht davon abhängen, ob man Englisch spricht. Es lebe das Wissen
 
 ## Schnellstart
 
-Unter Windows: [Python](https://www.python.org/downloads/) 3.10 oder neuer installieren, einmal `Instalar.cmd` doppelklicken und danach `Traducir.cmd`, das den Übersetzer im Browser öffnet.
+Unter Windows: den PowerShell-Schritten im nächsten Abschnitt folgen.
 
 Aus dem Quellcode, mit Python 3.10 oder neuer:
 

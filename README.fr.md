@@ -12,7 +12,7 @@ Le savoir ne devrait pas dépendre de l'anglais. Vive le savoir.
 
 ## Démarrage rapide
 
-Sous Windows : installez [Python](https://www.python.org/downloads/) 3.10 ou plus récent, double-cliquez sur `Instalar.cmd` (une seule fois) puis sur `Traducir.cmd`, qui ouvre le traducteur dans le navigateur.
+Sous Windows : suivez les étapes PowerShell de la section suivante.
 
 Depuis le code, avec Python 3.10 ou plus récent :
 
