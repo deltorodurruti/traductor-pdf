@@ -19,8 +19,8 @@ From source, with Python 3.10 or newer:
 ```bash
 pip install -r requirements.txt
 python3 main.py                                # asks you everything step by step
-python3 main.py book.pdf --yes --engine web    # straight through, no questions
-python3 main.py book.pdf --yes --engine web --origen fr   # the original is in French
+python3 main.py book.pdf --yes --yes-cloud --engine web    # straight through, no questions
+python3 main.py book.pdf --yes --yes-cloud --engine web --origen fr   # the original is in French
 ```
 
 For scanned PDFs, also install Tesseract (`brew install tesseract` on Mac, `sudo apt install tesseract-ocr` on Linux, the UB-Mannheim installer on Windows). If you add RapidOCR (`pip install rapidocr onnxruntime`), every page is read by both and the best of each reading is kept.
@@ -50,7 +50,7 @@ Open PowerShell (Windows key, type "PowerShell", Enter) and paste the commands o
 3. Translate a book. The result lands on your Desktop as "my book traducido.pdf" (if there's no Desktop folder, next to the original PDF):
 
    ```powershell
-   py main.py "$HOME\Downloads\my book.pdf" --yes --engine web
+   py main.py "$HOME\Downloads\my book.pdf" --yes --yes-cloud --engine web
    ```
 
 4. If the PDF is scanned, install Tesseract and add it to your `Path`. Then reopen PowerShell:
@@ -65,7 +65,7 @@ Open PowerShell (Windows key, type "PowerShell", Enter) and paste the commands o
 
    ```powershell
    Set-Content -Path "$HOME\.groq_key" -Value "YOUR_KEY" -NoNewline
-   py main.py "$HOME\Downloads\my book.pdf" --yes --engine groq
+   py main.py "$HOME\Downloads\my book.pdf" --yes --yes-cloud --engine groq
    ```
 
 Next time, just `cd $HOME\traductor-pdf` and run the command from step 3. To update: `git pull`.
@@ -121,7 +121,7 @@ echo 'YOUR_KEY' > ~/.groq_key && chmod 600 ~/.groq_key
 
 Free plans have a daily quota. When it runs out, the program waits and carries on, or switches to another key. With `--borrador edge --engine groq`, Microsoft writes the draft and the large model only corrects it, which uses half the quota.
 
-Keep in mind that with a cloud engine, the book's text leaves your computer.
+Keep in mind that with an online engine, the book's text leaves your computer. That's why, with `--yes`, the program also asks for `--yes-cloud` as confirmation.
 
 ## Other `main.py` options
 

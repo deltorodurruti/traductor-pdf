@@ -19,8 +19,8 @@ Depuis le code, avec Python 3.10 ou plus récent :
 ```bash
 pip install -r requirements.txt
 python3 main.py                                 # vous guide pas à pas
-python3 main.py livre.pdf --yes --engine web    # directement, sans questions
-python3 main.py livre.pdf --yes --engine web --origen fr   # l'original est en français
+python3 main.py livre.pdf --yes --yes-cloud --engine web    # directement, sans questions
+python3 main.py livre.pdf --yes --yes-cloud --engine web --origen fr   # l'original est en français
 ```
 
 Pour les PDF scannés, installez aussi Tesseract (`brew install tesseract` sur Mac, `sudo apt install tesseract-ocr` sous Linux, l'installateur UB-Mannheim sous Windows). Si vous ajoutez RapidOCR (`pip install rapidocr onnxruntime`), chaque page est lue par les deux et le programme garde le meilleur de chaque lecture.
@@ -50,7 +50,7 @@ Ouvrez PowerShell (touche Windows, tapez « PowerShell », puis Entrée) et coll
 3. Traduisez un livre. Le résultat arrive sur votre Bureau sous le nom « mon livre traducido.pdf » (s'il ne trouve pas le Bureau, à côté du PDF d'origine) :
 
    ```powershell
-   py main.py "$HOME\Downloads\mon livre.pdf" --yes --engine web
+   py main.py "$HOME\Downloads\mon livre.pdf" --yes --yes-cloud --engine web
    ```
 
 4. Si le PDF est scanné, installez Tesseract et ajoutez-le au `Path`. Puis rouvrez PowerShell :
@@ -65,7 +65,7 @@ Ouvrez PowerShell (touche Windows, tapez « PowerShell », puis Entrée) et coll
 
    ```powershell
    Set-Content -Path "$HOME\.groq_key" -Value "VOTRE_CLE" -NoNewline
-   py main.py "$HOME\Downloads\mon livre.pdf" --yes --engine groq
+   py main.py "$HOME\Downloads\mon livre.pdf" --yes --yes-cloud --engine groq
    ```
 
 La fois suivante, il suffit de `cd $HOME\traductor-pdf` et de la commande de l'étape 3. Pour mettre à jour : `git pull`.
@@ -121,7 +121,7 @@ echo 'VOTRE_CLE' > ~/.groq_key && chmod 600 ~/.groq_key
 
 Les offres gratuites ont un quota quotidien. Quand il est épuisé, le programme attend puis continue seul, ou passe à une autre clé. Avec `--borrador edge --engine groq`, Microsoft fait le brouillon et le grand modèle se contente de le corriger : cela consomme moitié moins de quota.
 
-Attention : avec un moteur dans le cloud, le texte du livre quitte votre ordinateur.
+Attention : avec un moteur en ligne, le texte du livre quitte votre ordinateur. C'est pourquoi, avec `--yes`, le programme demande aussi `--yes-cloud` pour confirmer.
 
 ## Autres options de `main.py`
 

@@ -25,8 +25,8 @@ Desde el código, con Python 3.10 o más nuevo:
 ```bash
 pip install -r requirements.txt
 python3 main.py                                # te pregunta todo paso a paso
-python3 main.py libro.pdf --yes --engine web   # directo, sin preguntas
-python3 main.py libro.pdf --yes --engine web --origen fr   # el original está en francés
+python3 main.py libro.pdf --yes --yes-cloud --engine web   # directo, sin preguntas
+python3 main.py libro.pdf --yes --yes-cloud --engine web --origen fr   # el original está en francés
 ```
 
 Para PDF escaneados instala también Tesseract (`brew install tesseract` en Mac, `sudo apt install tesseract-ocr` en Linux, el instalador de UB-Mannheim en Windows). Si además instalas RapidOCR (`pip install rapidocr onnxruntime`), cada página se lee con los dos y se queda con lo mejor de cada lectura.
@@ -56,7 +56,7 @@ Abre PowerShell (tecla Windows, escribe «PowerShell» y Enter) y pega los coman
 3. Traduce un libro. El resultado queda en tu Escritorio como «mi libro traducido.pdf» (si no encuentra el Escritorio, junto al PDF original):
 
    ```powershell
-   py main.py "$HOME\Downloads\mi libro.pdf" --yes --engine web
+   py main.py "$HOME\Downloads\mi libro.pdf" --yes --yes-cloud --engine web
    ```
 
 4. Si el PDF es escaneado, instala Tesseract y agrégalo al `Path`. Después vuelve a abrir PowerShell:
@@ -71,7 +71,7 @@ Abre PowerShell (tecla Windows, escribe «PowerShell» y Enter) y pega los coman
 
    ```powershell
    Set-Content -Path "$HOME\.groq_key" -Value "TU_CLAVE" -NoNewline
-   py main.py "$HOME\Downloads\mi libro.pdf" --yes --engine groq
+   py main.py "$HOME\Downloads\mi libro.pdf" --yes --yes-cloud --engine groq
    ```
 
 La próxima vez basta con `cd $HOME\traductor-pdf` y el comando del paso 3. Para actualizar: `git pull`.
@@ -127,7 +127,7 @@ echo 'TU_CLAVE' > ~/.groq_key && chmod 600 ~/.groq_key
 
 Los planes gratis tienen cupo diario. Cuando se acaba, el programa espera y sigue solo, o rota a otra clave. Con `--borrador edge --engine groq`, Microsoft hace el borrador y el modelo grande solo lo corrige: gasta la mitad de cupo.
 
-Ojo: con un motor en la nube, el texto del libro sale de tu equipo.
+Ojo: con un motor en línea, el texto del libro sale de tu equipo. Por eso, si usas `--yes`, el programa te pide además `--yes-cloud` como confirmación.
 
 ## Otras opciones de `main.py`
 

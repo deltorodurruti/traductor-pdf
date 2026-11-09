@@ -23,7 +23,7 @@ jobs:
       - name: Traducir un PDF de ejemplo (README, paso 3)
         run: |
           py make_sample.py
-          py main.py "$PWD\sample.pdf" --yes --engine web
+          py main.py "$PWD\sample.pdf" --yes --yes-cloud --engine web
           $salida = Get-ChildItem "$HOME\Desktop", "$PWD" -Filter "sample*traducido*.pdf" -ErrorAction SilentlyContinue
           if (-not $salida) { Get-ChildItem "$PWD" -Filter "sample*" | Format-Table Name, Length; throw "no se generó el PDF traducido" }
           $salida | Format-Table FullName, Length
@@ -48,10 +48,10 @@ jobs:
       - name: Probar traductorpdf.exe
         run: |
           Remove-Item "$HOME\Desktop\sample*traducido*" -ErrorAction SilentlyContinue
-          .\dist\traductorpdf.exe "$PWD\sample.pdf" --yes --engine web
+          .\dist\traductorpdf.exe "$PWD\sample.pdf" --yes --yes-cloud --engine web
           $salida = Get-ChildItem "$HOME\Desktop", "$PWD" -Filter "sample*traducido*.pdf" -ErrorAction SilentlyContinue
           if (-not $salida) { throw "el .exe no generó el PDF traducido" }
-          .\dist\traductorpdf.exe "$PWD\sample.pdf" --yes --engine web --ocr force 2>&1 | Tee-Object -Variable ocr
+          .\dist\traductorpdf.exe "$PWD\sample.pdf" --yes --yes-cloud --engine web --ocr force 2>&1 | Tee-Object -Variable ocr
           if ($ocr -match "OCR no disponible") { throw "el .exe no encontró su Tesseract" }
           (Get-Item .\dist\traductorpdf.exe).Length / 1MB
           exit 0
