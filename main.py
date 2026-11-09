@@ -459,7 +459,7 @@ def _ocr_hint():
     from ocr import ocr_available
     ok, _ = ocr_available()
     return ("Tesseract está instalado: lo más probable es que sean hojas en blanco" if ok
-            else "OCR no disponible; instala Tesseract: brew install tesseract")
+            else "OCR no disponible; instala Tesseract (ver README)")
 
 def main(argv=None):
     _fix_ssl_certs()
