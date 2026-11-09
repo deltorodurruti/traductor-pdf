@@ -8,7 +8,7 @@ Translates PDF books from English, French, German, Italian, Portuguese or Latin 
 
 AI can translate well these days. The trouble starts when you ask it for a whole book: it usually refuses because of copyright, or it does a couple of pages and stops. This program gets around that. It goes page by page, on your own computer, with the engine you pick, and at the end you get the complete book in your language.
 
-Knowledge shouldn't depend on speaking English. Long live knowledge.
+Knowledge shouldn't depend on speaking English. FUCK COPYRIGHT
 
 ## Quick start
 
