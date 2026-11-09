@@ -19,8 +19,8 @@ Depuis le code, avec Python 3.10 ou plus récent :
 ```bash
 pip install -r requirements.txt
 python3 main.py                                 # vous guide pas à pas
-python3 main.py livre.pdf --yes --yes-cloud --engine web    # directement, sans questions
-python3 main.py livre.pdf --yes --yes-cloud --engine web --origen fr   # l'original est en français
+python3 main.py livre.pdf --yes --yes-cloud --engine edge    # directement, sans questions
+python3 main.py livre.pdf --yes --yes-cloud --engine edge --origen fr   # l'original est en français
 ```
 
 Pour les PDF scannés, installez aussi Tesseract (`brew install tesseract` sur Mac, `sudo apt install tesseract-ocr` sous Linux, l'installateur UB-Mannheim sous Windows). Si vous ajoutez RapidOCR (`pip install rapidocr onnxruntime`), chaque page est lue par les deux et le programme garde le meilleur de chaque lecture.
@@ -50,7 +50,7 @@ Ouvrez PowerShell (touche Windows, tapez « PowerShell », puis Entrée) et coll
 3. Traduisez un livre. Le résultat arrive sur votre Bureau sous le nom « mon livre traducido.pdf » (s'il ne trouve pas le Bureau, à côté du PDF d'origine) :
 
    ```powershell
-   py main.py "$HOME\Downloads\mon livre.pdf" --yes --yes-cloud --engine web
+   py main.py "$HOME\Downloads\mon livre.pdf" --yes --yes-cloud --engine edge
    ```
 
 4. Si le PDF est scanné, installez Tesseract et ajoutez-le au `Path`. Puis rouvrez PowerShell :
@@ -101,7 +101,7 @@ ln -s "$PWD/flujo.sh"          ~/.local/bin/flujo
 
 ## Moteurs de traduction
 
-On choisit avec `--engine`. Sans clé : `web` (Google), `edge` (Microsoft, rapide et de bonne qualité), `argos` et `opus` (hors ligne) et `ollama` (un modèle sur votre machine). Avec `--yes` sans `--engine`, c'est `ollama` qui est utilisé.
+On choisit avec `--engine`. Sans clé : `edge` (Microsoft, rapide et de bonne qualité ; c'est celui qu'on recommande), `web` (Google, qui refuse parfois les requêtes et laisse des blocs non traduits), `argos` et `opus` (hors ligne) et `ollama` (un modèle sur votre machine). Avec `--yes` sans `--engine`, c'est `ollama` qui est utilisé.
 
 Un grand modèle dans le cloud donne une traduction nettement meilleure. Plusieurs ont une offre gratuite ; il suffit d'enregistrer la clé dans un fichier texte de votre dossier personnel :
 

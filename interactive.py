@@ -81,7 +81,7 @@ def _wizard_simple(cfg: Config) -> Config:
     cfg.input_pdf = ask_text("   1) Arrastra aqui el PDF y presiona Enter", cfg.input_pdf or "")
     cfg.bilingual = ask_bool(
         "   2) Mostrar el original (pequeno) al lado para comparar?", True)
-    cfg.backend = "web"
+    cfg.backend = "edge"
     cfg.book_type = "general"
     cfg.ocr_mode = "auto"
     cfg.preservar_intraducibles = False
@@ -118,7 +118,8 @@ def run_wizard(preset: Config | None = None) -> Config:
 
     cfg.backend = ask_choice(
         "Motor de traducción",
-        [("web", "Google gratis: rápido y buena calidad, necesita internet (recomendado)"),
+        [("edge", "Microsoft gratis: rápido y buena calidad, necesita internet (recomendado)"),
+         ("web", "Google gratis, necesita internet (a veces rechaza pedidos)"),
          ("ollama", "LLM local offline, más lento en CPU pero privado"),
          ("opus", "OPUS-MT (NMT dedicado, offline)"),
          ("argos", "Argos Translate (ligero, offline)"),

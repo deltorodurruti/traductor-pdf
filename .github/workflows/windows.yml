@@ -23,7 +23,7 @@ jobs:
       - name: Traducir un PDF de ejemplo (README, paso 3)
         run: |
           py make_sample.py
-          py main.py "$PWD\sample.pdf" --yes --yes-cloud --engine web
+          py main.py "$PWD\sample.pdf" --yes --yes-cloud --engine edge
           $salida = Get-ChildItem "$HOME\Desktop", "$PWD" -Filter "sample*traducido*.pdf" -ErrorAction SilentlyContinue
           if (-not $salida) { Get-ChildItem "$PWD" -Filter "sample*" | Format-Table Name, Length; throw "no se generó el PDF traducido" }
           $salida | Format-Table FullName, Length

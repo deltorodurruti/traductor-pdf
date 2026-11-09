@@ -19,8 +19,8 @@ Aus dem Quellcode, mit Python 3.10 oder neuer:
 ```bash
 pip install -r requirements.txt
 python3 main.py                                # fragt alles Schritt für Schritt ab
-python3 main.py buch.pdf --yes --yes-cloud --engine web    # direkt, ohne Fragen
-python3 main.py buch.pdf --yes --yes-cloud --engine web --origen de   # das Original ist auf Deutsch
+python3 main.py buch.pdf --yes --yes-cloud --engine edge    # direkt, ohne Fragen
+python3 main.py buch.pdf --yes --yes-cloud --engine edge --origen de   # das Original ist auf Deutsch
 ```
 
 Für gescannte PDFs zusätzlich Tesseract installieren (`brew install tesseract` auf dem Mac, `sudo apt install tesseract-ocr` unter Linux, den UB-Mannheim-Installer unter Windows). Mit RapidOCR (`pip install rapidocr onnxruntime`) wird jede Seite von beiden gelesen, und das Programm behält jeweils das bessere Ergebnis.
@@ -50,7 +50,7 @@ Für gescannte PDFs zusätzlich Tesseract installieren (`brew install tesseract`
 3. Ein Buch übersetzen. Das Ergebnis landet auf deinem Desktop als „mein buch traducido.pdf“ (gibt es keinen Desktop-Ordner, neben dem Original-PDF):
 
    ```powershell
-   py main.py "$HOME\Downloads\mein buch.pdf" --yes --yes-cloud --engine web
+   py main.py "$HOME\Downloads\mein buch.pdf" --yes --yes-cloud --engine edge
    ```
 
 4. Bei gescannten PDFs Tesseract installieren und zum `Path` hinzufügen. Danach PowerShell neu öffnen:
@@ -101,7 +101,7 @@ ln -s "$PWD/flujo.sh"          ~/.local/bin/flujo
 
 ## Übersetzungsmaschinen
 
-Auswahl mit `--engine`. Ohne Schlüssel laufen `web` (Google), `edge` (Microsoft, schnell und gut), `argos` und `opus` (offline) sowie `ollama` (ein Modell auf deinem eigenen Rechner). Mit `--yes` ohne `--engine` wird `ollama` verwendet.
+Auswahl mit `--engine`. Ohne Schlüssel laufen `edge` (Microsoft, schnell und gut; die Empfehlung), `web` (Google, das manchmal Anfragen abweist und Blöcke unübersetzt lässt), `argos` und `opus` (offline) sowie `ollama` (ein Modell auf deinem eigenen Rechner). Mit `--yes` ohne `--engine` wird `ollama` verwendet.
 
 Ein großes Modell in der Cloud übersetzt deutlich besser. Mehrere Anbieter haben einen kostenlosen Tarif; es reicht, den Schlüssel in einer Textdatei im Home-Ordner zu speichern:
 

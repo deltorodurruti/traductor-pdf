@@ -19,8 +19,8 @@ From source, with Python 3.10 or newer:
 ```bash
 pip install -r requirements.txt
 python3 main.py                                # asks you everything step by step
-python3 main.py book.pdf --yes --yes-cloud --engine web    # straight through, no questions
-python3 main.py book.pdf --yes --yes-cloud --engine web --origen fr   # the original is in French
+python3 main.py book.pdf --yes --yes-cloud --engine edge    # straight through, no questions
+python3 main.py book.pdf --yes --yes-cloud --engine edge --origen fr   # the original is in French
 ```
 
 For scanned PDFs, also install Tesseract (`brew install tesseract` on Mac, `sudo apt install tesseract-ocr` on Linux, the UB-Mannheim installer on Windows). If you add RapidOCR (`pip install rapidocr onnxruntime`), every page is read by both and the best of each reading is kept.
@@ -50,7 +50,7 @@ Open PowerShell (Windows key, type "PowerShell", Enter) and paste the commands o
 3. Translate a book. The result lands on your Desktop as "my book traducido.pdf" (if there's no Desktop folder, next to the original PDF):
 
    ```powershell
-   py main.py "$HOME\Downloads\my book.pdf" --yes --yes-cloud --engine web
+   py main.py "$HOME\Downloads\my book.pdf" --yes --yes-cloud --engine edge
    ```
 
 4. If the PDF is scanned, install Tesseract and add it to your `Path`. Then reopen PowerShell:
@@ -101,7 +101,7 @@ ln -s "$PWD/flujo.sh"          ~/.local/bin/flujo
 
 ## Translation engines
 
-Pick one with `--engine`. These need no key: `web` (Google), `edge` (Microsoft, fast and good), `argos` and `opus` (offline) and `ollama` (a model on your own machine). With `--yes` and no `--engine`, it uses `ollama`.
+Pick one with `--engine`. These need no key: `edge` (Microsoft, fast and good; the recommended one), `web` (Google, which sometimes turns requests away and leaves blocks untranslated), `argos` and `opus` (offline) and `ollama` (a model on your own machine). With `--yes` and no `--engine`, it uses `ollama`.
 
 A large cloud model gives noticeably better translations. Several have free plans; just save the key in a text file in your home folder:
 

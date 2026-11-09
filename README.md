@@ -25,8 +25,8 @@ Desde el código, con Python 3.10 o más nuevo:
 ```bash
 pip install -r requirements.txt
 python3 main.py                                # te pregunta todo paso a paso
-python3 main.py libro.pdf --yes --yes-cloud --engine web   # directo, sin preguntas
-python3 main.py libro.pdf --yes --yes-cloud --engine web --origen fr   # el original está en francés
+python3 main.py libro.pdf --yes --yes-cloud --engine edge   # directo, sin preguntas
+python3 main.py libro.pdf --yes --yes-cloud --engine edge --origen fr   # el original está en francés
 ```
 
 Para PDF escaneados instala también Tesseract (`brew install tesseract` en Mac, `sudo apt install tesseract-ocr` en Linux, el instalador de UB-Mannheim en Windows). Si además instalas RapidOCR (`pip install rapidocr onnxruntime`), cada página se lee con los dos y se queda con lo mejor de cada lectura.
@@ -56,7 +56,7 @@ Abre PowerShell (tecla Windows, escribe «PowerShell» y Enter) y pega los coman
 3. Traduce un libro. El resultado queda en tu Escritorio como «mi libro traducido.pdf» (si no encuentra el Escritorio, junto al PDF original):
 
    ```powershell
-   py main.py "$HOME\Downloads\mi libro.pdf" --yes --yes-cloud --engine web
+   py main.py "$HOME\Downloads\mi libro.pdf" --yes --yes-cloud --engine edge
    ```
 
 4. Si el PDF es escaneado, instala Tesseract y agrégalo al `Path`. Después vuelve a abrir PowerShell:
@@ -107,7 +107,7 @@ ln -s "$PWD/flujo.sh"          ~/.local/bin/flujo
 
 ## Motores de traducción
 
-Se elige con `--engine`. Sin clave funcionan `web` (Google), `edge` (Microsoft, rápido y bueno), `argos` y `opus` (sin internet) y `ollama` (un modelo en tu propio equipo). Si usas `--yes` sin `--engine`, se usa `ollama`.
+Se elige con `--engine`. Sin clave funcionan `edge` (Microsoft, rápido y bueno; es el recomendado), `web` (Google, que a veces rechaza pedidos y deja bloques sin traducir), `argos` y `opus` (sin internet) y `ollama` (un modelo en tu propio equipo). Si usas `--yes` sin `--engine`, se usa `ollama`.
 
 Con un modelo grande en la nube la traducción mejora bastante. Hay varios con plan gratis; basta con guardar la clave en un archivo de texto en tu carpeta personal:
 
