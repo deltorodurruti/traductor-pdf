@@ -1,0 +1,25 @@
+==========================================================
+  TRADUCTOR DE PDF  -  Guia rapida (Windows)
+==========================================================
+
+INSTALAR (una sola vez)
+-----------------------
+1. Instala Python 3.10 o mas nuevo desde python.org.
+   En el instalador marca "Add python.exe to PATH".
+2. Doble clic en Instalar.cmd y espera a que termine.
+
+TRADUCIR (cada vez)
+-------------------
+1. Doble clic en Traducir.cmd. Se abre el traductor en el navegador.
+2. Elige tu PDF, el tipo de texto y el motor, y pulsa "Traducir".
+3. Cuando termine, descarga el resultado.
+
+Si prefieres PowerShell, el README.md trae los comandos paso a paso.
+
+NOTAS
+-----
+- Funciona con PDF normales y escaneados (fotos). Para los escaneados
+  instala Tesseract (ver README.md).
+- Tu PDF original nunca se modifica.
+
+==========================================================

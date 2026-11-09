@@ -1,0 +1,1 @@
+Scripts históricos de una sola ejecución; no son herramientas soportadas.

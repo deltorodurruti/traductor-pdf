@@ -1,0 +1,28 @@
+# --- Núcleo (obligatorio) ---
+pymupdf>=1.24        # extracción de PDF (texto + imágenes) y rasterizado
+beautifulsoup4>=4.12 # lectura y transformación de HTML
+requests>=2.31       # llamadas a Ollama y servicios de traducción
+deep-translator>=1.11  # motor 'web' (Google gratis, rápido, por defecto)
+
+# --- OCR para PDF escaneados (opcional, muy recomendado) ---
+pytesseract>=0.3.10
+Pillow>=10.0
+numpy>=1.24        # para enderezar (deskew) escaneos torcidos
+opencv-python-headless>=4.8   # binarización Otsu para mejor OCR
+# Segundo motor de OCR (opcional): con Tesseract forman el modo 'doble' (ver README)
+# rapidocr>=3.10
+# onnxruntime>=1.23
+# Además necesitas el BINARIO Tesseract del sistema:
+#   Linux:   sudo apt install tesseract-ocr tesseract-ocr-eng
+#   macOS:   brew install tesseract
+#   Windows: instalador de UB-Mannheim (y añade el idioma 'eng')
+
+# --- Motor por defecto: Ollama ---
+# No requiere paquete Python (se usa por HTTP). Instala Ollama aparte:
+#   https://ollama.com   y luego:   ollama pull qwen2.5:32b
+
+# --- Motores alternativos (opcionales) ---
+# argostranslate>=1.9
+# transformers>=4.40
+# torch
+# sentencepiece

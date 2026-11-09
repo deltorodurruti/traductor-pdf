@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Traductor de Libros</title>
+<style>
+  :root{ --bg:#f6f3ec; --fg:#241f18; --muted:#7c6f57; --rule:#d9ccb0; --accent:#8a5a25;
+         --accent2:#b5813f; --card:#fffdf8; --ok:#2e7d54; --err:#b23a2e; }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#15120d; --fg:#ece4d5; --muted:#a99c81; --rule:#463c2d; --accent:#d9a866;
+           --accent2:#caa05e; --card:#1e1913; --ok:#5fce93; --err:#e88a7d; } }
+  *{ box-sizing:border-box; }
+  body{ font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif; margin:0;
+        background:var(--bg); color:var(--fg); line-height:1.55; }
+  .wrap{ max-width:760px; margin:0 auto; padding:24px 18px 80px; }
+  h1{ font-size:1.5rem; margin:.2em 0; }
+  .lead{ color:var(--muted); margin-top:0; }
+  .card{ background:var(--card); border:1px solid var(--rule); border-radius:14px;
+         padding:18px; margin:16px 0; }
+  #drop{ border:2px dashed var(--rule); border-radius:14px; padding:34px 18px; text-align:center;
+         cursor:pointer; transition:.15s; }
+  #drop.over{ border-color:var(--accent); background:rgba(138,90,37,.07); }
+  #drop .big{ font-size:1.05rem; font-weight:600; }
+  #drop small{ color:var(--muted); }
+  .file{ font-weight:600; color:var(--accent); }
+  label{ display:block; font-size:.9rem; font-weight:600; margin:12px 0 4px; }
+  select,input[type=text],input[type=number]{ width:100%; padding:9px 10px; border:1px solid var(--rule);
+    border-radius:9px; background:var(--bg); color:var(--fg); font-size:.95rem; }
+  .grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .row{ display:flex; align-items:center; gap:8px; margin-top:12px; }
+  .row input[type=checkbox]{ width:18px; height:18px; }
+  .hint{ font-size:.82rem; color:var(--muted); margin-top:4px; }
+  button{ font-size:1.05rem; font-weight:700; padding:13px 20px; border:none; border-radius:12px;
+    background:var(--accent); color:#fff; cursor:pointer; width:100%; margin-top:8px; }
+  button:disabled{ opacity:.5; cursor:default; }
+  .btns{ display:flex; gap:10px; margin-top:12px; }
+  .btns a{ flex:1; text-align:center; text-decoration:none; padding:12px; border-radius:12px;
+    border:1px solid var(--accent); color:var(--accent); font-weight:700; }
+  .btns a.primary{ background:var(--accent); color:#fff; }
+  #log{ font-family:ui-monospace,Consolas,monospace; font-size:.82rem; white-space:pre-wrap;
+    background:var(--bg); border:1px solid var(--rule); border-radius:10px; padding:12px;
+    max-height:280px; overflow:auto; margin-top:12px; }
+  .status{ font-weight:700; }
+  .status.ok{ color:var(--ok); } .status.err{ color:var(--err); }
+  .adv summary{ cursor:pointer; font-weight:600; color:var(--muted); }
+  .hidden{ display:none; }
+  .spin{ display:inline-block; width:14px; height:14px; border:2px solid var(--rule);
+    border-top-color:var(--accent); border-radius:50%; animation:sp .8s linear infinite; vertical-align:-2px;}
+  @keyframes sp{ to{ transform:rotate(360deg); } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>📖 Traductor de Libros</h1>
+  <p class="lead">Traduce tus PDF a español, con las imágenes intactas y en formato bilingüe (original / traducción).</p>
+
+  <div class="card">
+    <div id="drop">
+      <div class="big">Arrastra aquí tu PDF</div>
+      <small>o haz clic para elegirlo</small>
+      <div id="fileName" class="file" style="margin-top:8px"></div>
+      <input id="file" type="file" accept="application/pdf,.pdf" class="hidden">
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="grid">
+      <div>
+        <label for="book_type">Tipo de texto</label>
+        <select id="book_type">
+          <option value="general">General</option>
+          <option value="especializado">Especializado (nombres y términos que no se traducen)</option>
+          <option value="articulo">Artículo</option>
+          <option value="libro">Libro (narrativa/ensayo)</option>
+          <option value="preguntas">Preguntas y respuestas</option>
+        </select>
+      </div>
+      <div>
+        <label for="tone">¿Cómo traducir?</label>
+        <select id="tone">
+          <option value="fluida">Natural y fluida</option>
+          <option value="literal">Lo más literal posible</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <input id="pronounce_audio" type="checkbox">
+      <label for="pronounce_audio" style="margin:0">Incluir audio de pronunciación (requiere espeak-ng)</label>
+    </div>
+
+    <details class="adv" style="margin-top:14px">
+      <summary>Opciones avanzadas</summary>
+      <div class="grid" style="margin-top:10px">
+        <div>
+          <label for="engine">Motor</label>
+          <select id="engine">
+            <option value="ollama">Ollama (mejor calidad)</option>
+            <option value="opus">OPUS-MT (ligero)</option>
+            <option value="argos">Argos (muy ligero)</option>
+          </select>
+        </div>
+        <div>
+          <label for="model">Modelo de Ollama</label>
+          <input id="model" type="text" value="qwen2.5:32b">
+        </div>
+        <div>
+          <label for="ocr">Páginas escaneadas (OCR)</label>
+          <select id="ocr">
+            <option value="auto">Detectar automáticamente</option>
+            <option value="force">Forzar OCR</option>
+            <option value="off">Nunca</option>
+          </select>
+        </div>
+        <div>
+          <label for="max_pages">Páginas (0 = todas)</label>
+          <input id="max_pages" type="number" value="0" min="0">
+        </div>
+      </div>
+      <div class="hint">La revisión de 5 pasadas se aplica automáticamente con Ollama.</div>
+    </details>
+  </div>
+
+  <button id="go" disabled>Traducir</button>
+
+  <div id="panel" class="card hidden">
+    <div class="status" id="statusLine"><span class="spin"></span> Trabajando…</div>
+    <div id="log"></div>
+    <div id="btns" class="btns hidden">
+      <a id="view" class="primary" target="_blank" rel="noopener">Ver traducción</a>
+      <a id="download">Descargar HTML</a>
+    </div>
+  </div>
+
+  <p class="hint">Consejo: para máxima calidad, ten <b>Ollama</b> abierto y el modelo descargado. La primera traducción puede tardar.</p>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+let pdfB64 = null, pdfName = null, polling = null;
+
+const drop = $("drop"), fileInput = $("file");
+drop.addEventListener("click", () => fileInput.click());
+drop.addEventListener("dragover", (e) => { e.preventDefault(); drop.classList.add("over"); });
+drop.addEventListener("dragleave", () => drop.classList.remove("over"));
+drop.addEventListener("drop", (e) => {
+  e.preventDefault(); drop.classList.remove("over");
+  if (e.dataTransfer.files.length) loadFile(e.dataTransfer.files[0]);
+});
+fileInput.addEventListener("change", () => { if (fileInput.files.length) loadFile(fileInput.files[0]); });
+
+function loadFile(f){
+  if (!f.name.toLowerCase().endsWith(".pdf")){ alert("Elige un archivo PDF."); return; }
+  const reader = new FileReader();
+  reader.onload = () => {
+    pdfB64 = reader.result.split(",")[1];   // quita "data:...;base64,"
+    pdfName = f.name;
+    $("fileName").textContent = "✓ " + f.name + "  (" + Math.round(f.size/1024) + " KB)";
+    $("go").disabled = false;
+  };
+  reader.readAsDataURL(f);
+}
+
+$("go").addEventListener("click", start);
+
+async function start(){
+  if (!pdfB64){ return; }
+  $("go").disabled = true;
+  $("panel").classList.remove("hidden");
+  $("btns").classList.add("hidden");
+  $("log").textContent = "";
+  setStatus("working", "Enviando…");
+
+  const options = {
+    engine: $("engine").value,
+    model: $("model").value.trim(),
+    book_type: $("book_type").value,
+    tone: $("tone").value,
+    ocr: $("ocr").value,
+    pronounce_audio: $("pronounce_audio").checked,
+    max_pages: parseInt($("max_pages").value || "0", 10),
+  };
+
+  let res;
+  try{
+    res = await fetch("/api/translate", {
+      method: "POST", headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({ filename: pdfName, pdf_base64: pdfB64, options }),
+    });
+  }catch(e){ return fail("No pude contactar el servidor local. ¿Está abierta la ventana negra 'Traducir'?"); }
+  const data = await res.json();
+  if (!res.ok || !data.job_id){ return fail(data.error || "Error al iniciar."); }
+  poll(data.job_id);
+}
+
+function poll(jid){
+  let last = 0;
+  polling = setInterval(async () => {
+    let d;
+    try{ d = await (await fetch("/api/progress?id=" + jid)).json(); }
+    catch(e){ return; }
+    if (d.lines && d.lines.length > last){
+      $("log").textContent += d.lines.slice(last).join("\n") + "\n";
+      last = d.lines.length;
+      $("log").scrollTop = $("log").scrollHeight;
+    }
+    if (d.done){
+      clearInterval(polling);
+      if (d.error){ return fail(d.error); }
+      setStatus("ok", "✓ ¡Listo!");
+      const v = $("view"), dl = $("download");
+      v.href = "/api/result?id=" + jid;
+      dl.href = "/api/result?id=" + jid;
+      dl.setAttribute("download", (pdfName || "libro").replace(/\.pdf$/i,"") + ".bilingue.html");
+      $("btns").classList.remove("hidden");
+      $("go").disabled = false;
+    }
+  }, 1000);
+}
+
+function setStatus(kind, text){
+  const s = $("statusLine");
+  s.className = "status " + (kind === "ok" ? "ok" : kind === "err" ? "err" : "");
+  s.innerHTML = (kind === "working" ? '<span class="spin"></span> ' : "") + text;
+}
+function fail(msg){
+  if (polling) clearInterval(polling);
+  setStatus("err", "✗ " + msg);
+  $("go").disabled = false;
+}
+</script>
+</body>
+</html>
