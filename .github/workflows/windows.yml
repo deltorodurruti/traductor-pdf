@@ -1,0 +1,59 @@
+name: windows
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependencias (README, paso 2)
+        run: py -m pip install -r requirements.txt
+
+      - name: Traducir un PDF de ejemplo (README, paso 3)
+        run: |
+          py make_sample.py
+          py main.py "$PWD\sample.pdf" --yes --engine dummy
+          $salida = Get-ChildItem "$HOME\Desktop", "$PWD" -Filter "sample*traducido*.pdf" -ErrorAction SilentlyContinue
+          if (-not $salida) { Get-ChildItem "$PWD" -Filter "sample*" | Format-Table Name, Length; throw "no se generó el PDF traducido" }
+          $salida | Format-Table FullName, Length
+
+      - name: Tesseract en el Path (README, paso 4)
+        run: |
+          choco install tesseract -y --no-progress
+          $env:Path = "$env:Path;C:\Program Files\Tesseract-OCR"
+          py -c "import pytesseract; print('tesseract', pytesseract.get_tesseract_version())"
+
+      - name: Clave guardada con Set-Content (README, paso 5)
+        run: |
+          Set-Content -Path "$HOME\.groq_key" -Value "CLAVE_DE_PRUEBA" -NoNewline
+          py -c "import os; k = open(os.path.expanduser('~/.groq_key'), encoding='utf-8').read(); assert k == 'CLAVE_DE_PRUEBA', repr(k); print('clave leída')"
+
+      - name: Construir traductorpdf.exe
+        run: |
+          py -m pip install pyinstaller
+          py -m PyInstaller --onefile --name traductorpdf --add-data "web;web" --add-data "C:\Program Files\Tesseract-OCR;Tesseract-OCR" main.py
+
+      - name: Probar traductorpdf.exe
+        run: |
+          Remove-Item "$HOME\Desktop\sample*traducido*" -ErrorAction SilentlyContinue
+          .\dist\traductorpdf.exe "$PWD\sample.pdf" --yes --engine dummy
+          $salida = Get-ChildItem "$HOME\Desktop", "$PWD" -Filter "sample*traducido*.pdf" -ErrorAction SilentlyContinue
+          if (-not $salida) { throw "el .exe no generó el PDF traducido" }
+          .\dist\traductorpdf.exe "$PWD\sample.pdf" --yes --engine dummy --ocr force
+          (Get-Item .\dist\traductorpdf.exe).Length / 1MB
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: traductorpdf-exe
+          path: dist/traductorpdf.exe
