@@ -14,7 +14,7 @@ Traduce libros en PDF de inglés, francés, alemán, italiano, portugués o lat�
 
 Hoy una IA traduce bien. El problema aparece cuando le pides un libro entero: casi siempre se niega por derechos de autor, o te traduce un par de páginas y se detiene. Este programa resuelve eso. Va página por página, en tu computador, con el motor que tú elijas, y al final te entrega el libro completo en tu idioma.
 
-El conocimiento no debería depender de hablar inglés. Que viva el conocimiento.
+El conocimiento no debería depender de hablar inglés. FUCK COPYRIGHT.
 
 ## Lo más rápido
 
