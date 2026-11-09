@@ -8,7 +8,7 @@
 
 KI übersetzt heute gut. Das Problem fängt an, wenn man ein ganzes Buch will: Meistens lehnt sie wegen des Urheberrechts ab, oder sie übersetzt ein paar Seiten und hört auf. Dieses Programm löst das. Es arbeitet Seite für Seite, auf deinem eigenen Rechner, mit der Übersetzungsmaschine deiner Wahl, und am Ende hast du das ganze Buch in deiner Sprache.
 
-Wissen sollte nicht davon abhängen, ob man Englisch spricht. Es lebe das Wissen.
+Wissen sollte nicht davon abhängen, ob man Englisch spricht. FUCK COPYRIGHT.
 
 ## Schnellstart
 

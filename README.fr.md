@@ -8,7 +8,7 @@ Traduit des livres PDF de l'anglais, du français, de l'allemand, de l'italien, 
 
 Une IA traduit bien aujourd'hui. Le problème arrive quand on lui demande un livre entier : la plupart du temps elle refuse à cause du droit d'auteur, ou elle traduit deux pages et s'arrête. Ce programme règle ça. Il avance page par page, sur votre ordinateur, avec le moteur de votre choix, et à la fin vous avez le livre complet dans votre langue.
 
-Le savoir ne devrait pas dépendre de l'anglais. Vive le savoir.
+Le savoir ne devrait pas dépendre de l'anglais. FUCK COPYRIGHT.
 
 ## Démarrage rapide
 
